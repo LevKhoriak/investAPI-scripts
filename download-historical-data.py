@@ -2,8 +2,6 @@ from tinkoff.invest import Client
 from tinkoff.invest import InstrumentType
 import requests
 
-TOKEN = open('.\\token.txt', 'r').read()
-
 def yesNoPrompt(q):
     if q == 'Y' or q == '' or q == 'y':
         return True
@@ -42,6 +40,11 @@ def downloadData(share):
     with open(f'.\\{archive_name}', 'wb') as f:
         f.write(r.content)
         
+
+token_filepath = input("Input token filepath [default is .\\token.txt] ")
+if token_filepath == '':
+    token_filepath = '.\\token.txt'
+TOKEN = open(token_filepath, 'r').read()
 
 with Client(TOKEN) as client:
     share = findFinstrumentByTicker()
