@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -128,7 +128,7 @@ def plotClosePrices(df_range, prompt, name = None):
     if prompt:
         plt.show()
 
-def plotClosePrices(df_range, prompt, name = None,):
+def plotClosePrices(df_range, prompt, period, name = None, title = None):
     if prompt:
         q = input("Would you like to see the plot? [Y/n] ")
     else:
@@ -138,13 +138,16 @@ def plotClosePrices(df_range, prompt, name = None,):
     elif q != 'Y' and q != 'y' and q != '':
         print("Sorry, that was unintelligible. Please try once again")
         return plotClosePrices(df_range)
+    start = df_range.index[0]
+    end = start + timedelta(days=period)
+    df_range = df_range[start:end]
     resampled_data = df_range.resample('30min').mean()
     if name == None:
         your_ticker = input("What is the company ticker? ")
     else:
         your_ticker = name
     # print(test)
-    plt.figure(figsize=(14,5))
+    plt.figure(num=title, figsize=(14/3,5))
     sns.set_style("ticks")
     plt.plot(resampled_data.index, resampled_data['Close'])
     sns.lineplot(resampled_data, x="Date", y="Close", color="firebrick")
