@@ -103,7 +103,6 @@ def plotClosePrices(df_range, prompt):
     plt.title(f"The Stock Price of {your_ticker}",size='x-large',color='blue')
     plt.show()
 
-
 def plotClosePrices(df_range, prompt, name = None):
     if prompt:
         q = input("Would you like to see the plot? [Y/n] ")
